@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+int n ;
+int flag [ 20 ] ;
+int arr[ 20 ] ;
+bool check ( int x )
+{
+    int y = sqrt(x) ;
+    for( int i = 2 ; i <= y ; i ++ )
+    {
+        if ( x % i == 0 )  return false ;
+    }
+    return true ;
+}
+void solve ( int idx )
+{
+
+    if ( idx == ( n + 1 ) )
+    {
+        printf("1");
+        for( int i = 2; i <= n ; i ++ )
+        {
+            printf(" %d",arr[i]) ;
+        }
+        printf("\n");
+        arr[1]=1;
+        return ;
+
+
+    }
+
+
+
+    for( int i = 2 ; i <= n ; i ++ )
+    {
+
+        if( idx == n )
+        {
+            if (  flag[ i ] == false && check ( arr[ idx - 1 ] + i ) && check ( i + 1 ) )
+            {
+                flag [ i ] = true ;
+                arr[ idx ] =  i ;
+                solve ( idx + 1 ) ;
+                flag[ i ] = false ;
+            }
+        }
+        else if ( flag[ i ] == false && check ( arr[ idx - 1 ] + i ) )
+        {
+            flag [ i ] = true ;
+            arr[ idx ] =  i ;
+            solve ( idx + 1 ) ;
+            flag[ i ] = false ;
+
+        }
+
+    }
+
+
+
+
+}
+int main()
+{
+    int l = 1 ;
+    while ( scanf("%d",&n) == 1 )
+    {
+        arr[1]=1;
+        if ( l > 1 ) printf("\n");
+        printf("Case %d:\n",l++);
+        solve(2);
+        
+    }
+    return 0;
+}
+
